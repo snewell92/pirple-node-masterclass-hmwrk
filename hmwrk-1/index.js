@@ -99,10 +99,16 @@ httpsServer.listen(
 const handlers = {
   ping: (data, cb) => cb(200),
   notFound: (data, cb) => cb(404),
-  hello: (data, cb) => cb(200, { message: "🤖 Form Voltron! 🤖" })
+  hello: (data, cb) => {
+    if (data.method == "POST") {
+      return cb(200, { message: "🤖 Form Voltron! 🤖" })
+    }
+
+    cb(400)
+  },
 }
 
 const router = {
   ping: handlers.ping,
-  hello: handlers.hello
+  hello: handlers.hello,
 }
